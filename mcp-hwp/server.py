@@ -1,4 +1,4 @@
-VERSION = "1.0.2"
+VERSION = "1.0.4"
 """
 mcp-hwp / server.py
 열려있는 한글(HWP) 문서의 오탈자·어색한 표현·데이터 불일치를 찾아주는 MCP 서버
