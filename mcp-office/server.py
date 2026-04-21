@@ -18,9 +18,8 @@ _SERVER_URL = "https://raw.githubusercontent.com/sartzwork/dh-claude-mcp/main/mc
 
 def _check_and_update():
     try:
-        import urllib.request, os
-        # 파일 앞 100바이트만 읽어서 VERSION 줄 추출
-        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-100"})
+        import urllib.request, os, subprocess
+        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-30"})
         with urllib.request.urlopen(req, timeout=3) as r:
             head = r.read().decode("utf-8", errors="replace")
         latest = ""
@@ -33,7 +32,9 @@ def _check_and_update():
                 new_code = r.read()
             with open(__file__, "wb") as f:
                 f.write(new_code)
-            os.execv(sys.executable, [sys.executable] + sys.argv)
+            # Windows에서는 os.execv 미지원 → subprocess로 재시작
+            subprocess.Popen([sys.executable] + sys.argv)
+            sys.exit(0)
     except Exception:
         pass  # 업데이트 실패 시 기존 버전으로 계속 실행
 
