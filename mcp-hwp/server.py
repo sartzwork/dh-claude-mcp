@@ -15,15 +15,22 @@ import time
 # ════════════════════════════════════════════════════════════════════
 
 VERSION = "1.0.0"
-_BASE_URL = "https://raw.githubusercontent.com/sartzwork/dh-claude-mcp/main/mcp-hwp"
+_SERVER_URL = "https://raw.githubusercontent.com/sartzwork/dh-claude-mcp/main/mcp-hwp/server.py"
 
 def _check_and_update():
     try:
         import urllib.request, os
-        with urllib.request.urlopen(_BASE_URL + "/version.txt", timeout=3) as r:
-            latest = r.read().decode().strip()
-        if latest != VERSION:
-            with urllib.request.urlopen(_BASE_URL + "/server.py", timeout=10) as r:
+        # server.py 첫 5줄만 읽어서 VERSION 줄 추출 (별도 version 파일 불필요)
+        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-200"})
+        with urllib.request.urlopen(req, timeout=3) as r:
+            head = r.read().decode("utf-8", errors="replace")
+        latest = ""
+        for line in head.splitlines():
+            if line.startswith("VERSION"):
+                latest = line.split('"')[1]
+                break
+        if latest and latest != VERSION:
+            with urllib.request.urlopen(_SERVER_URL, timeout=10) as r:
                 new_code = r.read()
             with open(__file__, "wb") as f:
                 f.write(new_code)
