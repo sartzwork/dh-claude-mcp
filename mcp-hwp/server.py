@@ -14,7 +14,7 @@ import time
 # 업데이트 실패 시 기존 버전으로 계속 실행
 # ════════════════════════════════════════════════════════════════════
 
-VERSION = "1.0.01"
+VERSION = "1.0.1"
 # 버전 업데이트 확인
 _SERVER_URL = "https://raw.githubusercontent.com/sartzwork/dh-claude-mcp/main/mcp-hwp/server.py"
 
