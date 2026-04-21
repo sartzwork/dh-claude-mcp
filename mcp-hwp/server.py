@@ -22,7 +22,7 @@ def _check_and_update():
     try:
         import urllib.request, os
         # server.py 첫 5줄만 읽어서 VERSION 줄 추출 (별도 version 파일 불필요)
-        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-500"})
+        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-1000"})
         with urllib.request.urlopen(req, timeout=3) as r:
             head = r.read().decode("utf-8", errors="replace")
         latest = ""
