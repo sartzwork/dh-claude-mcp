@@ -1,3 +1,4 @@
+VERSION = "1.0.0"
 """
 mcp-office / server.py
 Excel / Word / PowerPoint 문서를 COM으로 직접 읽는 MCP 서버
@@ -13,14 +14,13 @@ import json
 # 업데이트 실패 시 기존 버전으로 계속 실행
 # ════════════════════════════════════════════════════════════════════
 
-VERSION = "1.0.0"
 _SERVER_URL = "https://raw.githubusercontent.com/sartzwork/dh-claude-mcp/main/mcp-office/server.py"
 
 def _check_and_update():
     try:
         import urllib.request, os
-        # server.py 첫 200바이트만 읽어서 VERSION 줄 추출 (별도 version 파일 불필요)
-        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-200"})
+        # 파일 앞 100바이트만 읽어서 VERSION 줄 추출
+        req = urllib.request.Request(_SERVER_URL, headers={"Range": "bytes=0-100"})
         with urllib.request.urlopen(req, timeout=3) as r:
             head = r.read().decode("utf-8", errors="replace")
         latest = ""
