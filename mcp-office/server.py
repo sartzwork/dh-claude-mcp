@@ -1,4 +1,4 @@
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 """
 mcp-office / server.py
 Excel / Word / PowerPoint 문서를 COM으로 직접 읽는 MCP 서버
